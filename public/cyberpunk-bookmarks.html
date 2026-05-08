@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>及时雨 // NEURAL_LINK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg0: #02020a;
+  --bg1: #05050f;
+  --bg2: #080814;
+  --panel: #0a0a18;
+  --panel2: #0d0d1f;
+  --pink: #ff2d78;
+  --pink-dim: #8b1040;
+  --pink-faint: #1a0510;
+  --cyan: #00f5ff;
+  --cyan-dim: #006b70;
+  --cyan-faint: #001a1c;
+  --yellow: #f5e642;
+  --yellow-dim: #6b6200;
+  --purple: #9d00ff;
+  --purple-dim: #4a007a;
+  --purple-faint: #110020;
+  --text: #c8cce8;
+  --text-dim: #5a5e7a;
+  --text-faint: #2a2e48;
+  --border: #1a1a30;
+  --border-bright: #2a2a50;
+  --glow-pink: 0 0 10px rgba(255,45,120,0.6), 0 0 30px rgba(255,45,120,0.2);
+  --glow-cyan: 0 0 10px rgba(0,245,255,0.6), 0 0 30px rgba(0,245,255,0.2);
+  --glow-yellow: 0 0 10px rgba(245,230,66,0.5), 0 0 25px rgba(245,230,66,0.15);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg0);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* ── GRID BACKGROUND ── */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── VIGNETTE ── */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(2,2,10,0.85) 100%);
+  pointer-events:none;
+  z-index:1;
+}
+
+/* ── GLITCH KEYFRAMES ── */
+@keyframes glitch1 {
+  0%,94%,100% { clip-path: inset(0 0 100% 0); transform: translateX(0); }
+  95% { clip-path: inset(20% 0 60% 0); transform: translateX(-4px); }
+  97% { clip-path: inset(50% 0 30% 0); transform: translateX(4px); }
+  99% { clip-path: inset(70% 0 10% 0); transform: translateX(-2px); }
+}
+@keyframes glitch2 {
+  0%,92%,100% { clip-path: inset(0 0 100% 0); transform: translateX(0); }
+  93% { clip-path: inset(10% 0 80% 0); transform: translateX(5px); }
+  96% { clip-path: inset(60% 0 20% 0); transform: translateX(-5px); }
+  98% { clip-path: inset(30% 0 50% 0); transform: translateX(3px); }
+}
+@keyframes flicker {
+  0%,96%,100% { opacity:1; }
+  97% { opacity:0.7; }
+  98% { opacity:1; }
+  99% { opacity:0.5; }
+}
+@keyframes pulse-border {
+  0%,100% { border-color: var(--pink-dim); box-shadow: none; }
+  50% { border-color: var(--pink); box-shadow: var(--glow-pink); }
+}
+@keyframes slideup {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes neon-flicker {
+  0%,19%,21%,23%,25%,54%,56%,100% {
+    text-shadow: var(--glow-cyan);
+    color: var(--cyan);
+  }
+  20%,24%,55% {
+    text-shadow: none;
+    color: var(--cyan-dim);
+  }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes blink {
+  0%,49% { opacity:1; }
+  50%,100% { opacity:0; }
+}
+
+/* ── HEADER ── */
+header {
+  position:sticky; top:0; z-index:100;
+  background: linear-gradient(180deg, rgba(2,2,10,0.98) 0%, rgba(5,5,15,0.95) 100%);
+  border-bottom: 1px solid var(--border-bright);
+  backdrop-filter: blur(12px);
+  animation: flicker 12s ease-in-out infinite;
+}
+
+.header-inner {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 14px 28px;
+  position:relative;
+}
+
+.header-inner::after {
+  content:'';
+  position:absolute; bottom:0; left:28px; right:28px;
+  height:1px;
+  background: linear-gradient(90deg, transparent, var(--pink), var(--cyan), transparent);
+  opacity:0.4;
+}
+
+/* LOGO */
+.logo-wrap { position:relative; display:inline-block; }
+
+.logo {
+  font-family:'Orbitron', monospace;
+  font-size:1.6rem;
+  font-weight:900;
+  color: var(--cyan);
+  text-shadow: var(--glow-cyan);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  animation: neon-flicker 8s ease-in-out infinite;
+  position:relative;
+  z-index:2;
+}
+
+.logo-glitch1, .logo-glitch2 {
+  position:absolute; top:0; left:0;
+  font-family:'Orbitron', monospace;
+  font-size:1.6rem;
+  font-weight:900;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  pointer-events:none;
+}
+.logo-glitch1 { color:var(--pink); animation: glitch1 6s infinite; z-index:3; }
+.logo-glitch2 { color:var(--yellow); animation: glitch2 7s infinite; z-index:3; }
+
+.logo-sub {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.62rem;
+  color:var(--text-dim);
+  letter-spacing:4px;
+  margin-top:2px;
+  text-transform:uppercase;
+}
+
+.logo-sub span { color:var(--pink); }
+
+/* HEADER RIGHT */
+.header-right {
+  display:flex; flex-direction:column; align-items:flex-end; gap:4px;
+}
+
+.stat-line {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.68rem;
+  color:var(--text-dim);
+  display:flex; gap:16px;
+}
+
+.stat-line .val { color:var(--cyan); text-shadow:var(--glow-cyan); }
+.stat-line .val-pink { color:var(--pink); text-shadow:var(--glow-pink); }
+
+.back-link {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.68rem;
+  color:var(--text-dim);
+  text-decoration:none;
+  letter-spacing:2px;
+  padding:4px 0;
+  transition:color 0.2s ease, text-shadow 0.2s ease;
+}
+.back-link:hover {
+  color:var(--cyan);
+  text-shadow:var(--glow-cyan);
+}
+
+/* HEX DECORATION */
+.hex-deco {
+  width:28px; height:28px;
+  border: 1px solid var(--pink-dim);
+  transform: rotate(45deg);
+  position:relative;
+  animation: pulse-border 3s ease-in-out infinite;
+  flex-shrink:0;
+}
+.hex-deco::after {
+  content:'';
+  position:absolute; inset:4px;
+  background:var(--pink);
+  transform:rotate(0deg);
+  opacity:0.3;
+}
+
+/* NAV TABS */
+.nav-wrap {
+  display:flex; align-items:center;
+  padding: 0 28px;
+  border-top: 1px solid var(--border);
+  overflow-x:auto; scrollbar-width:none;
+  gap:2px;
+}
+.nav-wrap::-webkit-scrollbar { display:none; }
+
+.nav-tab {
+  padding: 8px 16px;
+  font-family:'Rajdhani', sans-serif;
+  font-size:0.78rem;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  cursor:pointer;
+  white-space:nowrap;
+  position:relative;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+  user-select:none;
+}
+.nav-tab::before {
+  content:'';
+  position:absolute; bottom:-2px; left:0; right:0;
+  height:2px;
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  transform:scaleX(0);
+  transition: transform 0.2s;
+}
+.nav-tab:hover { color:var(--text); }
+.nav-tab:hover::before { transform:scaleX(1); }
+.nav-tab.active {
+  color:var(--cyan);
+  text-shadow:var(--glow-cyan);
+}
+.nav-tab.active::before { transform:scaleX(1); }
+
+/* ── STATUS BAR ── */
+.status-bar {
+  display:flex; align-items:center; gap:24px;
+  padding: 8px 28px;
+  background:rgba(0,245,255,0.03);
+  border-bottom:1px solid var(--border);
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.65rem;
+  color:var(--text-faint);
+  flex-wrap:wrap;
+}
+.status-bar .s { display:flex; align-items:center; gap:8px; }
+.status-bar .s::before { content:'//'; color:var(--pink-dim); }
+.status-bar .sv { color:var(--cyan); font-size:0.72rem; }
+.status-bar .sv-p { color:var(--pink); font-size:0.72rem; }
+.status-bar .pulse {
+  width:6px; height:6px;
+  background:var(--cyan);
+  border-radius:50%;
+  box-shadow:var(--glow-cyan);
+  animation: blink 1.2s step-end infinite;
+}
+
+/* ── LAYOUT ── */
+.layout {
+  display:grid;
+  grid-template-columns: 230px 1fr;
+  min-height: calc(100vh - 120px);
+  position:relative; z-index:2;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  border-right:1px solid var(--border);
+  padding:20px 0;
+  position:sticky; top:120px;
+  height:calc(100vh - 120px);
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color: var(--pink-dim) transparent;
+  background: linear-gradient(180deg, var(--bg1) 0%, var(--bg0) 100%);
+}
+
+.sidebar-label {
+  padding:8px 20px;
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.58rem;
+  letter-spacing:4px;
+  color:var(--text-faint);
+  text-transform:uppercase;
+  margin-top:12px;
+  display:flex; align-items:center; gap:8px;
+}
+.sidebar-label::after {
+  content:'';
+  flex:1; height:1px;
+  background:linear-gradient(90deg, var(--border-bright), transparent);
+}
+
+.sitem {
+  display:flex; align-items:center; gap:10px;
+  padding:8px 20px;
+  cursor:pointer;
+  font-family:'Rajdhani', sans-serif;
+  font-size:0.82rem;
+  font-weight:500;
+  letter-spacing:1px;
+  color:var(--text-dim);
+  border-left:2px solid transparent;
+  transition:all 0.15s;
+  position:relative;
+  overflow:hidden;
+}
+.sitem::before {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(90deg, rgba(255,45,120,0.06), transparent);
+  opacity:0; transition:opacity 0.15s;
+}
+.sitem:hover { color:var(--text); border-left-color:var(--pink-dim); }
+.sitem:hover::before { opacity:1; }
+.sitem.active {
+  color:var(--cyan);
+  border-left-color:var(--cyan);
+  text-shadow:0 0 8px rgba(0,245,255,0.4);
+  background:linear-gradient(90deg, rgba(0,245,255,0.05), transparent);
+}
+.sitem.active::before { opacity:0; }
+
+.sitem-icon { font-size:0.9rem; flex-shrink:0; width:18px; text-align:center; }
+.sitem-name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-transform:uppercase; }
+.sitem-count {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.62rem;
+  color:var(--text-faint);
+  background:var(--border);
+  padding:1px 6px;
+  border-radius:2px;
+  flex-shrink:0;
+}
+.sitem.active .sitem-count {
+  color:var(--cyan-dim);
+  background:var(--cyan-faint);
+  border:1px solid var(--cyan-dim);
+}
+
+/* ── MAIN ── */
+.main {
+  padding:24px 28px;
+  min-width:0;
+  position:relative;
+}
+
+/* ── SEARCH ── */
+.search-wrap {
+  position:relative; margin-bottom:24px;
+}
+
+.search-box {
+  display:flex; align-items:center;
+  background:var(--panel);
+  border:1px solid var(--border-bright);
+  padding:12px 16px;
+  gap:12px;
+  position:relative;
+  transition:all 0.2s;
+}
+.search-box::before {
+  content:'SEARCH //';
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.62rem;
+  letter-spacing:2px;
+  color:var(--pink);
+  text-shadow:var(--glow-pink);
+  flex-shrink:0;
+}
+.search-box::after {
+  content:'';
+  position:absolute; bottom:-1px; left:0; right:0;
+  height:1px;
+  background:linear-gradient(90deg, var(--pink), var(--cyan), transparent);
+  opacity:0;
+  transition:opacity 0.2s;
+}
+.search-wrap:focus-within .search-box {
+  border-color:var(--pink-dim);
+  box-shadow: 0 0 20px rgba(255,45,120,0.1);
+}
+.search-wrap:focus-within .search-box::after { opacity:1; }
+
+.search-input {
+  flex:1; background:transparent; border:none; outline:none;
+  font-family:'Rajdhani', sans-serif;
+  font-size:0.95rem;
+  font-weight:500;
+  letter-spacing:1px;
+  color:var(--text);
+  caret-color:var(--pink);
+}
+.search-input::placeholder { color:var(--text-faint); }
+
+.search-count {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.65rem;
+  color:var(--text-faint);
+  flex-shrink:0;
+}
+
+/* ── CATEGORY HEADER ── */
+.cat-head {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:20px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.cat-head::after {
+  content:'';
+  position:absolute; bottom:-1px; left:0; width:60px;
+  height:1px;
+  background:linear-gradient(90deg, var(--pink), transparent);
+}
+.cat-head-icon { font-size:1.3rem; }
+.cat-head-title {
+  font-family:'Orbitron', monospace;
+  font-size:1.1rem;
+  font-weight:700;
+  color:var(--pink);
+  text-shadow:var(--glow-pink);
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+.cat-head-slash { color:var(--text-faint); font-family:'Share Tech Mono', monospace; }
+.cat-head-sub {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.65rem;
+  color:var(--text-faint);
+  margin-left:auto;
+  letter-spacing:2px;
+}
+
+/* ── CARDS GRID ── */
+.grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap:12px;
+}
+
+/* ── CARD ── */
+.card {
+  display:flex; flex-direction:column; gap:8px;
+  padding:14px 16px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-top:2px solid var(--border-bright);
+  text-decoration:none; color:inherit;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  transition:all 0.2s;
+  animation: slideup 0.35s ease both;
+}
+
+/* corner accent */
+.card::before {
+  content:'';
+  position:absolute; top:0; right:0;
+  width:0; height:0;
+  border-style:solid;
+  border-width:0 20px 20px 0;
+  border-color:transparent var(--pink-dim) transparent transparent;
+  transition:border-color 0.2s;
+}
+/* bottom bar */
+.card::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0;
+  height:1px;
+  background:linear-gradient(90deg, var(--pink), transparent);
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform 0.3s ease;
+}
+
+.card:hover {
+  border-color:var(--pink-dim);
+  border-top-color:var(--pink);
+  background:var(--panel2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(255,45,120,0.1);
+}
+.card:hover::before { border-color:transparent var(--pink) transparent transparent; }
+.card:hover::after { transform:scaleX(1); }
+
+/* card scan line on hover */
+.card-scan {
+  position:absolute; top:0; left:-100%; width:100%; height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,45,120,0.04), transparent);
+  transition: left 0.4s ease;
+  pointer-events:none;
+}
+.card:hover .card-scan { left:100%; }
+
+.card-title {
+  font-family:'Rajdhani', sans-serif;
+  font-size:0.88rem;
+  font-weight:600;
+  letter-spacing:0.5px;
+  color:var(--text);
+  line-height:1.4;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  transition:color 0.2s;
+  position:relative;
+}
+.card:hover .card-title { color:var(--pink); text-shadow:0 0 8px rgba(255,45,120,0.3); }
+
+.card-meta {
+  display:flex; align-items:center; gap:8px;
+}
+
+.card-domain {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.62rem;
+  color:var(--cyan-dim);
+  background:var(--cyan-faint);
+  border:1px solid rgba(0,245,255,0.08);
+  padding:2px 8px;
+  letter-spacing:1px;
+  flex-shrink:0;
+  transition:all 0.2s;
+}
+.card:hover .card-domain {
+  color:var(--cyan);
+  border-color:rgba(0,245,255,0.25);
+  text-shadow:var(--glow-cyan);
+}
+
+/* ── ALL VIEW SECTIONS ── */
+.section { margin-bottom:36px; }
+.section-head {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:14px;
+  padding:8px 0;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.section-head::before {
+  content:'';
+  position:absolute; bottom:-1px; left:0; width:40px;
+  height:1px; background:var(--pink);
+  box-shadow:var(--glow-pink);
+}
+.section-head-icon { font-size:1rem; }
+.section-head-name {
+  font-family:'Rajdhani', sans-serif;
+  font-size:0.85rem;
+  font-weight:700;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--yellow);
+  text-shadow:var(--glow-yellow);
+}
+.section-head-num {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.62rem;
+  color:var(--text-faint);
+  margin-left:auto;
+}
+
+/* ── EMPTY ── */
+.empty {
+  text-align:center; padding:80px 20px;
+  color:var(--text-faint);
+}
+.empty-code {
+  font-family:'Orbitron', monospace;
+  font-size:3rem;
+  color:var(--border-bright);
+  display:block; margin-bottom:16px;
+  text-shadow: 0 0 30px rgba(255,45,120,0.1);
+}
+.empty-msg {
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.75rem;
+  letter-spacing:2px;
+}
+
+/* ── FOOTER ── */
+footer {
+  position:relative; z-index:2;
+  border-top:1px solid var(--border);
+  padding:12px 28px;
+  display:flex; justify-content:space-between; align-items:center;
+  font-family:'Share Tech Mono', monospace;
+  font-size:0.62rem;
+  color:var(--text-faint);
+  background:var(--bg1);
+}
+.footer-left { display:flex; align-items:center; gap:16px; }
+.footer-left .dot {
+  width:5px; height:5px;
+  background:var(--pink);
+  box-shadow:var(--glow-pink);
+  border-radius:50%;
+  animation:blink 1.5s step-end infinite;
+}
+footer .c { color:var(--cyan); }
+footer .p { color:var(--pink); }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-track { background:var(--bg0); }
+::-webkit-scrollbar-thumb { background:var(--pink-dim); }
+::-webkit-scrollbar-thumb:hover { background:var(--pink); }
+
+/* ── STAGGER ANIMATION ── */
+.card:nth-child(1){animation-delay:.02s}
+.card:nth-child(2){animation-delay:.04s}
+.card:nth-child(3){animation-delay:.06s}
+.card:nth-child(4){animation-delay:.08s}
+.card:nth-child(5){animation-delay:.10s}
+.card:nth-child(6){animation-delay:.12s}
+.card:nth-child(7){animation-delay:.14s}
+.card:nth-child(8){animation-delay:.16s}
+.card:nth-child(9){animation-delay:.18s}
+.card:nth-child(10){animation-delay:.20s}
+.card:nth-child(11){animation-delay:.22s}
+.card:nth-child(12){animation-delay:.24s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{display:none}
+  .grid{grid-template-columns:1fr 1fr}
+  header .header-inner{padding:10px 16px}
+  .main{padding:16px}
+}
+@media(max-width:480px){
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <a class="back-link" href="/">← 返回主页</a>
+      <div class="logo-wrap">
+        <div class="logo">及时雨 // NEURAL_LINK</div>
+        <div class="logo-glitch1">及时雨 // NEURAL_LINK</div>
+        <div class="logo-glitch2">及时雨 // NEURAL_LINK</div>
+      </div>
+      <div class="logo-sub">BOOKMARK_ARCHIVE · <span>SECTOR_7G</span> · NET_RUNNER_DB</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="header-right">
+        <div class="stat-line">
+          <span>NODES <span class="val" id="totalCount">313</span></span>
+          <span>SECTORS <span class="val" id="catCount">12</span></span>
+        </div>
+        <div class="stat-line">
+          <span>ACTIVE <span class="val-pink" id="visibleCount">313</span></span>
+          <span>FILTER <span class="val" id="filterStatus">NULL</span></span>
+        </div>
+      </div>
+      <div class="hex-deco"></div>
+    </div>
+  </div>
+  <div class="status-bar">
+    <div class="s"><span class="pulse"></span> SYSTEM ONLINE</div>
+    <div class="s">SECTOR <span class="sv" id="activeSector">ALL</span></div>
+    <div class="s">QUERY <span class="sv-p" id="queryStatus">IDLE</span></div>
+    <div class="s" style="margin-left:auto;color:var(--text-faint)">
+      SYS_VER 2.1.88 · UPTIME 99.7%
+    </div>
+  </div>
+  <div class="nav-wrap" id="navWrap"></div>
+</header>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main" id="main">
+    <div class="search-wrap">
+      <div class="search-box">
+        <input class="search-input" id="searchInput"
+          type="text" placeholder="输入节点标识或域名进行检索..." autocomplete="off" spellcheck="false">
+        <span class="search-count" id="searchCount"></span>
+      </div>
+    </div>
+    <div id="content"></div>
+  </main>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <div class="dot"></div>
+    <span>NEURAL_LINK BOOKMARK_ARCHIVE · <span class="p">v2.1.88</span></span>
+  </div>
+  <span>JACK_IN // <span class="c">ALWAYS_CONNECTED</span></span>
+</footer>
+
+<script>
+const DATA = {
+  categories: [
+    {
+      id:'ai-chat', icon:'🤖', name:'AI 对话助手', desc:'CONVERSATIONAL_AI',
+      items:[
+        {title:'Claude',url:'https://claude.ai/'},
+        {title:'Grok',url:'https://grok.com/'},
+        {title:'Gemini',url:'https://gemini.google.com/app'},
+        {title:'DeepSeek Chat',url:'https://chat.deepseek.com/'},
+        {title:'Kimi',url:'https://www.kimi.com/'},
+        {title:'豆包',url:'https://www.doubao.com/chat/'},
+        {title:'Perplexity',url:'https://www.perplexity.ai/'},
+        {title:'NotebookLM',url:'https://notebooklm.google.com/'},
+        {title:'Qwen',url:'https://chat.qwen.ai/'},
+        {title:'Z.ai Chat (GLM-4)',url:'https://chat.z.ai/'},
+        {title:'Microsoft Copilot',url:'https://copilot.microsoft.com/'},
+        {title:'Google AI Studio',url:'https://aistudio.google.com/app/prompts/new_chat'},
+        {title:'iGPT (ZTE内部)',url:'https://igpt.dt.zte.com.cn/zte-icenter-igpt-web/#/home/chat'},
+        {title:'NebulaCoder 6',url:'http://nebulacoder.dev.zte.com.cn/'},
+        {title:'GitHub Copilot',url:'https://github.com/copilot'},
+      ]
+    },
+    {
+      id:'ai-code', icon:'💻', name:'AI 编程工具', desc:'CODING_AGENTS',
+      items:[
+        {title:'Claude Code (GitHub)',url:'https://github.com/anthropics/claude-code'},
+        {title:'Cursor 快速开始',url:'https://docs.cursor.com/zh/get-started/quickstart'},
+        {title:'Cline - AI Coding',url:'https://cline.bot/'},
+        {title:'Kilo Code',url:'https://kilo.ai/'},
+        {title:'Kilo Code Docs',url:'https://kilo.ai/docs'},
+        {title:'OpenCode',url:'https://opencode.ai/'},
+        {title:'Lovable',url:'https://lovable.dev/'},
+        {title:'Flowith AI',url:'https://flowith.net/blank'},
+        {title:'flowith 2.0',url:'https://flo.ing/blank'},
+        {title:'Repomix 代码打包',url:'https://repomix.com/zh-cn/'},
+        {title:'CodeFlow (内网)',url:'https://10.57.82.98:34567/'},
+        {title:'Gemini CLI',url:'https://google-gemini.github.io/gemini-cli/'},
+        {title:'oh-my-openagent',url:'https://github.com/code-yeongyu/oh-my-openagent'},
+        {title:'everything-claude-code',url:'https://github.com/affaan-m/everything-claude-code'},
+        {title:'claude-code-router',url:'https://github.com/musistudio/claude-code-router'},
+        {title:'Aider 依赖版本',url:'https://aider.chat/docs/troubleshooting/imports.html'},
+      ]
+    },
+    {
+      id:'ai-agent', icon:'🕸️', name:'AI Agent & 工作流', desc:'AGENT_SYSTEMS',
+      items:[
+        {title:'Manus',url:'https://manus.im/'},
+        {title:'n8n Workflows',url:'https://bitcloud2023.app.n8n.cloud/'},
+        {title:'n8n AI Tutorial',url:'https://docs.n8n.io/advanced-ai/intro-tutorial/'},
+        {title:'n8n 部署方式指南',url:'https://n8n.akashio.com/article/n8n-deployment-method'},
+        {title:'AutoGen Studio',url:'https://microsoft.github.io/autogen/stable//user-guide/autogenstudio-user-guide/index.html'},
+        {title:'AutoGen 文档(中文)',url:'https://www.aidoczh.com/autogen/stable/'},
+        {title:'Awesome Agentic Patterns',url:'https://agentic-patterns.com/'},
+        {title:'AIOS Foundation',url:'https://www.aios.foundation/'},
+        {title:'OpenClaw',url:'https://github.com/openclaw/openclaw'},
+        {title:'OpenClaw 桌面版',url:'https://openclawcn.net/'},
+        {title:'AutoClaw',url:'https://autoglm.zhipuai.cn/autoclaw/'},
+        {title:'EasyClaw',url:'https://easyclaw.cn/'},
+        {title:'WorkBuddy AI办公',url:'https://www.codebuddy.cn/work/'},
+        {title:'LobsterAI (有道)',url:'https://lobsterai.youdao.com/#/index'},
+        {title:'ClawHub',url:'https://clawhub.ai/'},
+        {title:'AGIAgent (开源 Manus)',url:'https://github.com/agi-hub/AGIAgent'},
+        {title:'Manus 12款替代开源项目',url:'https://www.meoai.net/best-ai-agent-open-source.html'},
+      ]
+    },
+    {
+      id:'ai-skills', icon:'🧠', name:'Agent Skills', desc:'SKILLS_MCP',
+      items:[
+        {title:'Anthropic Skills 官方仓库',url:'https://github.com/anthropics/skills'},
+        {title:'Introducing Agent Skills',url:'https://claude.com/blog/skills'},
+        {title:'Agent Skills Directory',url:'https://skills.sh/'},
+        {title:'SkillsMP 市场',url:'https://skillsmp.com/zh'},
+        {title:'awesome-claude-skills',url:'https://github.com/ComposioHQ/awesome-claude-skills'},
+        {title:'kilo-marketplace/skills',url:'https://github.com/Kilo-Org/kilo-marketplace/tree/main/skills'},
+        {title:'Claude superpowers',url:'https://github.com/obra/superpowers'},
+        {title:'MCP 工具文档',url:'https://mcp-docs.cn/docs/concepts/tools'},
+        {title:'Snack Prompt',url:'https://snackprompt.com/'},
+        {title:'PromptVault 个人提示词库',url:'https://timelovers.github.io/promptvault/'},
+        {title:'awesome-prompt',url:'https://github.com/NeekChaw/awesome-prompt'},
+        {title:'Anthropic 提示词教程',url:'https://github.com/anthropics/prompt-eng-interactive-tutorial'},
+        {title:'Nano Banana Prompts',url:'https://opennana.com/awesome-prompt-gallery/'},
+        {title:'AI Skills 指令大全',url:'https://ai.codefather.cn/skills'},
+        {title:'Agent Skills DeepLearning',url:'https://www.deeplearning.ai/short-courses/agent-skills-with-anthropic/'},
+        {title:'kepano/obsidian-skills',url:'https://github.com/kepano/obsidian-skills'},
+        {title:'Cursor Skills Docs',url:'https://cursor.com/cn/docs/context/skills'},
+        {title:'mcpmarket 每日技能',url:'https://mcpmarket.com/zh/daily/skills'},
+        {title:'提示精灵',url:'https://www.promptgenius.site/'},
+        {title:'提示词优化器',url:'https://prompt.heyai.studio/'},
+      ]
+    },
+    {
+      id:'ai-platform', icon:'⚡', name:'AI 平台 & API', desc:'PLATFORMS_INFRA',
+      items:[
+        {title:'DeepSeek 开放平台',url:'https://platform.deepseek.com/api_keys'},
+        {title:'HuggingFace',url:'https://huggingface.co/'},
+        {title:'智谱AI开放平台',url:'https://www.bigmodel.cn/'},
+        {title:'OpenRouter 可观测性',url:'https://openrouter.ai/settings/observability'},
+        {title:'Google AI Studio Apps',url:'https://aistudio.google.com/apps'},
+        {title:'ElevenLabs TTS',url:'https://elevenlabs.io/'},
+        {title:'Stable Diffusion 在线',url:'https://stablediffusionweb.com/app/image-generator'},
+        {title:'Unsloth 微调框架',url:'https://github.com/unslothai/unsloth'},
+        {title:'GLM-4.7-Flash',url:'https://huggingface.co/zai-org/GLM-4.7-Flash'},
+        {title:'ZTE iGPT Apps',url:'https://llm.zte.com.cn/zte-igpt-ellm-apps/#/mapDetail'},
+        {title:'AI应用商店',url:'https://ai-bot.cn/ai-app-store/'},
+        {title:'coze.cn 扣子编程',url:'https://code.coze.cn/home'},
+        {title:'Karpathy Blog',url:'https://karpathy.bearblog.dev/'},
+        {title:'TechInsights',url:'https://www.techinsights.com/'},
+      ]
+    },
+    {
+      id:'llm-learn', icon:'📚', name:'LLM 学习资源', desc:'KNOWLEDGE_BASE',
+      items:[
+        {title:'LLM Agents - Lil\'Log',url:'https://lilianweng.github.io/posts/2023-06-23-agent/'},
+        {title:'Lil\'Log 主页',url:'https://lilianweng.github.io/'},
+        {title:'MiniMind - 从0训练GPT',url:'https://github.com/jingyaogong/minimind'},
+        {title:'Tiny-Universe 大模型白盒',url:'https://github.com/datawhalechina/tiny-universe'},
+        {title:'Happy-LLM Transformer架构',url:'https://github.com/datawhalechina/happy-llm'},
+        {title:'RLHF: From Zero to ChatGPT',url:'https://www.youtube.com/watch?v=2MBJOuVq380'},
+        {title:'LLaMA Factory FineTune',url:'https://colab.research.google.com/drive/1eRTPn37ltBbYsISy9Aw2NuI2Aq5CQrD9'},
+        {title:'GRPO 推理模型训练',url:'https://unsloth.ai/docs/get-started/reinforcement-learning-rl-guide'},
+        {title:'wdndev/llm_interview_note',url:'https://github.com/wdndev/llm_interview_note'},
+        {title:'AIOS论文',url:'https://arxiv.org/html/2403.16971v5#S3'},
+        {title:'LLMs Get Lost In Multi-Turn',url:'https://arxiv.org/abs/2505.06120'},
+        {title:'awesome-llm-books',url:'https://github.com/Jason2Brownlee/awesome-llm-books'},
+        {title:'Datawhale GitHub',url:'https://github.com/datawhalechina'},
+        {title:'DeepTutor',url:'https://deeptutor.knowhiz.us/'},
+        {title:'Shunyu Yao 个人页',url:'https://ysymyth.github.io/'},
+        {title:'Sam Altman Blog',url:'https://blog.samaltman.com/'},
+        {title:'自主Agent/上下文工程索引',url:'https://github.com/ninehills/blog/issues/150'},
+      ]
+    },
+    {
+      id:'algo-ds', icon:'🧮', name:'算法 & 数据结构', desc:'ALGORITHMS',
+      items:[
+        {title:'LeetCode Hot 100 题解',url:'https://leet100sols-xrzjyheh.manus.space/'},
+        {title:'NeetCode Practice',url:'https://neetcode.io/practice/practice/coreSkills'},
+        {title:'Grind 75',url:'https://www.techinterviewhandbook.org/grind75/'},
+        {title:'Hello 算法',url:'https://github.com/krahets/hello-algo'},
+        {title:'labuladong 算法框架',url:'https://labuladong.online/zh/algo/essential-technique/algorithm-summary/'},
+        {title:'LRU算法 - labuladong',url:'https://github.com/labuladong/fucking-algorithm'},
+        {title:'RAG GitHub Topics',url:'https://github.com/topics/rag'},
+        {title:'面试狗',url:'https://interview.dog/'},
+      ]
+    },
+    {
+      id:'tools', icon:'🛠️', name:'效率工具', desc:'PRODUCTIVITY',
+      items:[
+        {title:'Excalidraw 白板',url:'https://excalidraw.com/'},
+        {title:'DrawMagic AI图表',url:'https://drawmagic.pro/'},
+        {title:'boardmix',url:'https://boardmix.cn/app/home'},
+        {title:'YouMind',url:'https://youmind.com/'},
+        {title:'Simplenote',url:'https://app.simplenote.com/'},
+        {title:'TLDW 视频摘要',url:'https://tldw.us/'},
+        {title:'Zread AI论文阅读',url:'https://zread.ai/'},
+        {title:'Vibero 文献阅读',url:'https://vibero.dev/'},
+        {title:'Podwise 播客笔记',url:'https://podwise.ai/'},
+        {title:'JSON在线解析',url:'https://www.sojson.com/'},
+        {title:'ChatDB 数据工具',url:'https://www.chatdb.ai/'},
+        {title:'defuddle 网页转Markdown',url:'https://github.com/kepano/defuddle'},
+        {title:'bestblogs.dev',url:'https://www.bestblogs.dev/'},
+        {title:'中文播客榜',url:'https://xyzrank.com/#/'},
+        {title:'ElevenLabs TTS',url:'https://elevenlabs.io/app/speech-synthesis/text-to-speech'},
+        {title:'TTSMaker',url:'https://ttsmaker.com/'},
+        {title:'Overleaf LaTeX模板',url:'https://cn.overleaf.com/latex/templates'},
+        {title:'AnyGen 视频转文章',url:'https://www.anygen.io/'},
+      ]
+    },
+    {
+      id:'design', icon:'🎨', name:'设计 & 创作', desc:'DESIGN_CREATIVE',
+      items:[
+        {title:'Figma',url:'https://www.figma.com/'},
+        {title:'Dribbble',url:'https://dribbble.com/'},
+        {title:'Microsoft Designer',url:'https://designer.microsoft.com/'},
+        {title:'Aura - 设计构建',url:'https://www.aura.build/'},
+        {title:'Saaspo 落地页案例',url:'https://saaspo.com/'},
+        {title:'PixMiller KV生成',url:'https://kv.pixmiller.com/'},
+        {title:'Studio Ghibli Search',url:'https://ghibli-search.anini.workers.dev/'},
+        {title:'小红书封面生成器',url:'https://xhscover.vivi.wiki/'},
+        {title:'小红书长文转图片',url:'https://rednote.limboy.me/'},
+        {title:'HisMax/RedInk',url:'https://github.com/HisMax/RedInk'},
+        {title:'Gemini 去水印工具',url:'https://github.com/journey-ad/gemini-watermark-remover'},
+        {title:'Vibe Coding 风格切换',url:'https://www.vibeatlas.shop/'},
+        {title:'awesome-vibe-coding',url:'https://github.com/filipecalegario/awesome-vibe-coding'},
+      ]
+    },
+    {
+      id:'learning', icon:'🎯', name:'个人成长', desc:'SELF_UPGRADE',
+      items:[
+        {title:'双重N-Back 记忆训练',url:'https://www.freefocusgames.com/zh/games/dual-n-back'},
+        {title:'Dual N-Back io',url:'https://dual-n-back.io/'},
+        {title:'Good Writing - Paul Graham',url:'https://paulgraham.com/goodwriting.html'},
+        {title:'Oliver Burkeman Posts',url:'https://www.oliverburkeman.com/posts'},
+        {title:'Typing Common English Words',url:'https://www.typing.com/student/lesson/328/common-english-words'},
+        {title:'How to Speak Faster',url:'https://www.youtube.com/watch?v=cAn2Wq9p_XE'},
+        {title:'复盘+：把经验转化为能力',url:'https://zh.z-library.sk/'},
+        {title:'YC Partner Simulator',url:'https://ycarena.com/games/partnersim'},
+        {title:'Learn Your Way (Google)',url:'https://learnyourway.withgoogle.com/'},
+        {title:'Zara\'s Newsletter',url:'https://zarazhang.substack.com/'},
+        {title:'fmhy.net 免费资源',url:'https://fmhy.net/'},
+        {title:'Reddit',url:'https://www.reddit.com/'},
+      ]
+    },
+    {
+      id:'travel-finance', icon:'✈️', name:'旅行 & 量化', desc:'TRAVEL_FINANCE',
+      items:[
+        {title:'Ctrip 旅行 Agent',url:'https://github.com/Haohao-end/Ctrip-Style-AI-Travel-Assistant'},
+        {title:'LangGraph Travel Planner',url:'https://github.com/HarimxChoi/langgraph-travel-agent'},
+        {title:'Multi-Agent Travel Workshop',url:'https://github.com/AzureCosmosDB/travel-multi-agent-workshop'},
+        {title:'awesome-quant',url:'https://github.com/wilsonfreitas/awesome-quant'},
+        {title:'Microsoft Qlib 量化',url:'https://github.com/microsoft/qlib'},
+        {title:'Tushare 数据',url:'https://tushare.pro/user/center'},
+        {title:'Accio 阿里巴巴 B2B',url:'https://www.accio.com/'},
+        {title:'YouTube',url:'https://youtube.com/'},
+        {title:'甲子光年 AI报告',url:'https://www.jazzyear.com/study_list.html'},
+        {title:'亿欧智库研究报告',url:'https://www.iyiou.com/research'},
+      ]
+    },
+    {
+      id:'career', icon:'🎓', name:'简历 & 职业', desc:'CAREER_PATH',
+      items:[
+        {title:'魔方简历 AI',url:'https://magicv.art/zh'},
+        {title:'木及简历',url:'https://www.mujicv.com/login/'},
+        {title:'cvora.net AI简历',url:'https://www.cvora.net/dashboard?demo=true'},
+        {title:'cv.ftqq.com',url:'https://cv.ftqq.com/'},
+        {title:'developer-portfolios',url:'https://github.com/emmabostian/developer-portfolios'},
+        {title:'Bruce Wang Resume',url:'https://brucewang15.vercel.app/resume'},
+        {title:'Samuel Zhang Projects',url:'https://samuelzhang.ca/projects'},
+        {title:'GitHubDaily 开源项目',url:'https://github.com/GitHubDaily/GitHubDaily'},
+        {title:'NeetCode',url:'https://neetcode.io/'},
+        {title:'前端面试10场景题',url:'https://www.codefather.cn/post/2038518843558633474'},
+      ]
+    },
+  ]
+};
+
+const allItems = DATA.categories.flatMap(c => c.items.map(i=>({...i,catId:c.id,catName:c.name,catIcon:c.icon})));
+let currentCat = 'all';
+let searchQuery = '';
+
+function getDomain(url) {
+  try { return new URL(url).hostname.replace('www.',''); }
+  catch { return url.slice(0,20); }
+}
+
+function buildSidebar() {
+  const el = document.getElementById('sidebar');
+  let h = '<div class="sidebar-label">// SECTORS</div>';
+  h += `<div class="sitem ${currentCat==='all'?'active':''}" onclick="selectCat('all')">
+    <span class="sitem-icon">📡</span>
+    <span class="sitem-name">ALL NODES</span>
+    <span class="sitem-count">${allItems.length}</span>
+  </div>`;
+  DATA.categories.forEach(c=>{
+    h+=`<div class="sitem ${currentCat===c.id?'active':''}" onclick="selectCat('${c.id}')">
+      <span class="sitem-icon">${c.icon}</span>
+      <span class="sitem-name">${c.name}</span>
+      <span class="sitem-count">${c.items.length}</span>
+    </div>`;
+  });
+  el.innerHTML = h;
+}
+
+function buildNav() {
+  const el = document.getElementById('navWrap');
+  let h = `<div class="nav-tab ${currentCat==='all'?'active':''}" onclick="selectCat('all')">ALL</div>`;
+  DATA.categories.forEach(c=>{
+    h+=`<div class="nav-tab ${currentCat===c.id?'active':''}" onclick="selectCat('${c.id}')">${c.icon} ${c.name}</div>`;
+  });
+  el.innerHTML = h;
+}
+
+function card(item, i) {
+  return `<a class="card" href="${item.url}" target="_blank" rel="noopener" style="animation-delay:${Math.min(i,12)*.025}s">
+    <div class="card-scan"></div>
+    <div class="card-title">${item.title}</div>
+    <div class="card-meta">
+      <div class="card-domain">${getDomain(item.url)}</div>
+    </div>
+  </a>`;
+}
+
+function buildContent() {
+  const el = document.getElementById('content');
+  const q = searchQuery.toLowerCase();
+  let items = currentCat==='all' ? allItems : allItems.filter(i=>i.catId===currentCat);
+  if(q) items = items.filter(i=>i.title.toLowerCase().includes(q)||getDomain(i.url).includes(q));
+
+  document.getElementById('visibleCount').textContent = items.length;
+  document.getElementById('filterStatus').textContent = q ? 'ACTIVE' : 'NULL';
+  document.getElementById('queryStatus').textContent = q ? `"${searchQuery.toUpperCase()}"` : 'IDLE';
+  document.getElementById('searchCount').textContent = q ? `${items.length} NODES` : '';
+
+  if(!items.length){
+    el.innerHTML=`<div class="empty">
+      <span class="empty-code">404</span>
+      <span class="empty-msg">// NODE NOT FOUND IN NEURAL NETWORK</span>
+    </div>`;
+    return;
+  }
+
+  if(currentCat==='all' && !q){
+    let h='';
+    DATA.categories.forEach(c=>{
+      const ci = items.filter(i=>i.catId===c.id);
+      if(!ci.length) return;
+      h+=`<div class="section">
+        <div class="section-head">
+          <span class="section-head-icon">${c.icon}</span>
+          <span class="section-head-name">${c.name}</span>
+          <span class="section-head-num">${ci.length} nodes</span>
+        </div>
+        <div class="grid">${ci.map((item,i)=>card(item,i)).join('')}</div>
+      </div>`;
+    });
+    el.innerHTML = h;
+  } else {
+    const c = currentCat!=='all' ? DATA.categories.find(x=>x.id===currentCat) : null;
+    let h='';
+    if(c){
+      h+=`<div class="cat-head">
+        <span class="cat-head-icon">${c.icon}</span>
+        <span class="cat-head-title">${c.name}</span>
+        <span class="cat-head-slash"> // </span>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--text-faint);letter-spacing:2px;">${c.desc}</span>
+        <span class="cat-head-sub">${items.length} NODES</span>
+      </div>`;
+    } else if(q){
+      h+=`<div class="cat-head">
+        <span class="cat-head-icon">🔍</span>
+        <span class="cat-head-title">SEARCH</span>
+        <span class="cat-head-slash"> // </span>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--pink);letter-spacing:2px;">"${searchQuery.toUpperCase()}"</span>
+        <span class="cat-head-sub">${items.length} RESULTS</span>
+      </div>`;
+    }
+    h+=`<div class="grid">${items.map((item,i)=>card(item,i)).join('')}</div>`;
+    el.innerHTML = h;
+  }
+}
+
+function selectCat(id){
+  currentCat = id;
+  document.getElementById('activeSector').textContent = id==='all' ? 'ALL' : DATA.categories.find(c=>c.id===id)?.name||id;
+  buildSidebar(); buildNav(); buildContent();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.getElementById('searchInput').addEventListener('input',function(){
+  searchQuery = this.value.trim();
+  if(searchQuery) currentCat='all';
+  buildSidebar(); buildNav(); buildContent();
+});
+
+document.getElementById('totalCount').textContent = allItems.length;
+document.getElementById('catCount').textContent = DATA.categories.length;
+buildSidebar(); buildNav(); buildContent();
+</script>
+</body>
+</html>
