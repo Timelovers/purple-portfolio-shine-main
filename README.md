@@ -1,74 +1,117 @@
-# Welcome to your Lovable project
+<p align="center">
+  <a href="#english">English</a>
+  &nbsp;·&nbsp;
+  <a href="#中文">中文</a>
+</p>
 
-## Project info
+<h2 id="english">English</h2>
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+# Purple Portfolio Shine
 
-## How can I edit this code?
+**A bilingual, motion-rich developer portfolio — projects, writing, and a standalone cyberpunk bookmark archive in one polished SPA.**
 
-There are several ways of editing your application.
+**Live:** [lijiaxing.com.cn](https://lijiaxing.com.cn)
 
-**Use Lovable**
+## Highlights
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- 🌐 **EN / 中文** — Language toggle with consistent copy across the whole surface  
+- ✨ **Motion & atmosphere** — Framer Motion sections and particle background without drowning content  
+- 📑 **Projects + prompt vault** — Each project links to copy-ready prompt pages for AI-assisted workflows  
+- 🔖 **Cyberpunk bookmark hub** — Static [`/cyberpunk-bookmarks.html`](https://lijiaxing.com.cn/cyberpunk-bookmarks.html) archive for fast link discovery  
+- 📰 **Blog routes** — Dedicated pages for posts with React Router  
 
-Changes made via Lovable will be committed automatically to this repo.
+## Stack
 
-**Use your preferred IDE**
+**Core:** React 18 · TypeScript · Vite 5  
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**UI:** Tailwind CSS · shadcn/ui (Radix primitives) · Lucide icons  
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**Behavior:** Framer Motion · React Router · TanStack Query  
 
-Follow these steps:
+**Quality:** ESLint · PostCSS · Autoprefixer  
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## Run locally
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+git clone https://github.com/Timelovers/purple-portfolio-shine-main.git
+cd purple-portfolio-shine-main
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Then open the URL Vite prints (default dev server settings are in `vite.config.ts`).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+**Production build**
 
-**Use GitHub Codespaces**
+```bash
+npm run build
+npm run preview   # optional local preview of dist/
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Contact & links
 
-## What technologies are used for this project?
+| | |
+|---|---|
+| **GitHub** | [github.com/Timelovers/purple-portfolio-shine-main](https://github.com/Timelovers/purple-portfolio-shine-main) |
+| **Email** | [2822937768@qq.com](mailto:2822937768@qq.com?subject=Portfolio%20Contact) |
+| **X** | [@cloudbit441506](https://x.com/cloudbit441506) |
+| **Org** | [github.com/Timelovers](https://github.com/Timelovers) |
 
-This project is built with:
+Made with 💜 by **Timelovers**.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+<h2 id="中文">中文</h2>
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+# Purple Portfolio Shine
 
-## Can I connect a custom domain to my Lovable project?
+**双语、重动效的开发者作品集站点 —— 项目展示、博客与独立的赛博朋克风书签库，一体化单页体验。**
 
-Yes, you can!
+**在线访问：** [lijiaxing.com.cn](https://lijiaxing.com.cn)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 功能亮点
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
-# purple-portfolio-shine-main
+- 🌐 **中英切换** — 全站文案一套上下文统一切换  
+- ✨ **动效与氛围** — Framer Motion 分区动效 + 粒子背景，突出内容不喧宾夺主  
+- 📑 **项目与提示词** — 每个项目可跳转至可复制提示词页面，便于 AI 辅助工作流  
+- 🔖 **赛博朋克书签页** — 独立静态页 [`/cyberpunk-bookmarks.html`](https://lijiaxing.com.cn/cyberpunk-bookmarks.html)，分类 / 搜索 / 外链一键打开  
+- 📰 **博客路由** — React Router 独立文章页  
+
+## 技术栈
+
+**核心：** React 18 · TypeScript · Vite 5  
+
+**界面：** Tailwind CSS · shadcn/ui（Radix）· Lucide  
+
+**交互与数据：** Framer Motion · React Router · TanStack Query  
+
+**工程：** ESLint · PostCSS · Autoprefixer  
+
+## 本地运行
+
+```bash
+git clone https://github.com/Timelovers/purple-portfolio-shine-main.git
+cd purple-portfolio-shine-main
+npm install
+npm run dev
+```
+
+浏览器打开终端输出的本地地址（具体端口见 `vite.config.ts`）。
+
+**生产构建**
+
+```bash
+npm run build
+npm run preview   # 可选：本地预览 dist
+```
+
+## 联系方式与仓库
+
+| | |
+|---|---|
+| **GitHub** | [github.com/Timelovers/purple-portfolio-shine-main](https://github.com/Timelovers/purple-portfolio-shine-main) |
+| **邮箱** | [2822937768@qq.com](mailto:2822937768@qq.com?subject=Portfolio%20Contact) |
+| **X** | [@cloudbit441506](https://x.com/cloudbit441506) |
+| **组织** | [github.com/Timelovers](https://github.com/Timelovers) |
+
+Made with 💜 by **Timelovers**.
