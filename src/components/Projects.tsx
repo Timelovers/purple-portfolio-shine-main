@@ -48,7 +48,6 @@ const Projects = () => {
       demo: 'https://punchbeat-3igmmbsf.manus.space',
       gradient: 'from-purple-500/20 to-pink-500/20',
       image: projectAiDocument,
-      video: '/media/punch-beat.mp4',
       iconSymbol: '🥊',
     },
     {

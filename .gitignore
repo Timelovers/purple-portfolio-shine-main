@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Too large for GitHub (>100MB); keep locally or host externally
+public/media/punch-beat.mp4
+
 # Secrets / local env
 .env
 .env.*
