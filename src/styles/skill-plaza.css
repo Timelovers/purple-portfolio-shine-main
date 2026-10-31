@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Averia+Gruesa+Libre&family=JetBrains+Mono:wght@500;700&display=swap');
+
+.skill-plaza {
+  --sp-brand: #35bfab;
+  --sp-brand-secondary: #1fc9e7;
+  --sp-primary: #334f52;
+  --sp-secondary: #7b888e;
+  --sp-border: rgba(255, 255, 255, 0.88);
+  --sp-card: rgba(255, 255, 255, 0.52);
+  --sp-card-hover: rgba(255, 255, 255, 0.72);
+  --sp-article: rgba(255, 255, 255, 0.86);
+  --sp-radius: 32px;
+  --sp-radius-md: 22px;
+  --sp-radius-sm: 16px;
+  --sp-radius-pill: 9999px;
+  --sp-gap: 0.5rem;
+
+  color: var(--sp-primary);
+  font-family:
+    'PingFang SC',
+    -apple-system,
+    system-ui,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    'Microsoft YaHei',
+    sans-serif;
+}
+
+.skill-plaza .sp-display {
+  font-family: 'Averia Gruesa Libre', 'PingFang SC', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.skill-plaza .sp-lcd {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+}
+
+.skill-plaza .sp-widget {
+  border: 1px solid var(--sp-border);
+  background: var(--sp-card);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border-radius: var(--sp-radius);
+  box-shadow:
+    0 2px 16px rgba(51, 79, 82, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transition:
+    transform 0.32s cubic-bezier(0.34, 1.35, 0.64, 1),
+    box-shadow 0.32s ease,
+    background 0.32s ease;
+}
+
+.skill-plaza .sp-widget:hover {
+  transform: translateY(-2px) scale(1.004);
+  background: var(--sp-card-hover);
+  box-shadow:
+    0 8px 28px rgba(53, 191, 171, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.skill-plaza .sp-widget-solid {
+  border: 1px solid var(--sp-border);
+  background: var(--sp-article);
+  backdrop-filter: blur(18px) saturate(170%);
+  -webkit-backdrop-filter: blur(18px) saturate(170%);
+  border-radius: var(--sp-radius);
+  box-shadow: 0 4px 24px rgba(51, 79, 82, 0.06);
+}
+
+.skill-plaza .sp-text-secondary {
+  color: var(--sp-secondary);
+}
+
+.skill-plaza .sp-text-brand {
+  color: var(--sp-brand);
+}
+
+.skill-plaza .sp-nav-active {
+  background: #fff;
+  color: var(--sp-primary);
+  border-radius: var(--sp-radius-pill);
+  box-shadow: 0 1px 8px rgba(51, 79, 82, 0.07);
+}
+
+.skill-plaza .sp-nav-idle {
+  border-radius: var(--sp-radius-pill);
+}
+
+.skill-plaza .sp-nav-idle:hover {
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--sp-primary);
+}
+
+/* 三列桌面仪表盘 */
+.skill-plaza .sp-bento {
+  display: grid;
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 0.85rem;
+  gap: var(--sp-gap);
+  grid-template-columns: 160px minmax(0, 1fr) 168px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    'nav hero timecol';
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .skill-plaza .sp-bento {
+    max-width: 400px;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'nav'
+      'hero'
+      'timecol';
+  }
+}
+
+.skill-plaza .sp-area-nav {
+  grid-area: nav;
+  align-self: start;
+}
+
+.skill-plaza .sp-area-hero {
+  grid-area: hero;
+  min-height: 200px;
+}
+
+.skill-plaza .sp-area-timecol {
+  grid-area: timecol;
+  min-height: 140px;
+}
+
+.skill-plaza .sp-clock {
+  border-radius: var(--sp-radius-md) !important;
+  min-height: 72px;
+}
+
+.skill-plaza .sp-clock-colon {
+  transform: translateY(-0.06em);
+}
+
+.skill-plaza .sp-timer {
+  border-radius: var(--sp-radius-md) !important;
+  flex-shrink: 0;
+}
+
+.skill-plaza .sp-timer:hover,
+.skill-plaza .sp-clock:hover {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.skill-plaza-dialog {
+  border: 1px solid rgba(255, 255, 255, 0.92) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(24px);
+  border-radius: var(--sp-radius) !important;
+}
+
+.skill-plaza .sp-pill {
+  border: 1px solid var(--sp-border);
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: var(--sp-radius-pill);
+  transition: background 0.2s ease;
+}
+
+.skill-plaza .sp-pill:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.skill-plaza .sp-link {
+  color: var(--sp-brand);
+}
+
+.skill-plaza .sp-music {
+  border-radius: var(--sp-radius-pill);
+}

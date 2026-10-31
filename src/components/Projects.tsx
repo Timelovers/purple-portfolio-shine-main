@@ -8,6 +8,10 @@ import aiCreatorCoachingNavigationCover from '@/assets/ai-creator-coaching-navig
 import bookmarkVisualizerCover from '@/assets/bookmark-visualizer-cover.png';
 import promptvaultCover from '@/assets/promptvault-cover.png';
 
+function imageSrc(image: string | { src: string }): string {
+  return typeof image === 'string' ? image : image.src;
+}
+
 const Projects = () => {
   const { t } = useLanguage();
 
@@ -46,6 +50,8 @@ const Projects = () => {
       tags: ['Mannerus', 'Interactive Game', 'Web Experience'],
       github: '',
       demo: 'https://punchbeat-3igmmbsf.manus.space',
+      /** Served from `public/media/punch-beat.mp4` (gitignored; copy locally before deploy). */
+      video: '/media/punch-beat.mp4',
       gradient: 'from-purple-500/20 to-pink-500/20',
       image: projectAiDocument,
       iconSymbol: '🥊',
@@ -122,6 +128,7 @@ const Projects = () => {
                   {project.video ? (
                     <video
                       src={project.video}
+                      poster={imageSrc(project.image)}
                       className="w-full h-full object-cover bg-black"
                       autoPlay
                       muted
