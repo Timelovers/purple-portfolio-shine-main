@@ -62,7 +62,7 @@ const Projects = () => {
       descriptionKey: 'projects.2.description',
       tags: ['TypeScript', 'AI Product', 'Creator Coaching'],
       github: 'https://github.com/Timelovers/AI-Career-Coaching-Navigator-',
-      demo: '',
+      demo: '/career-coach/',
       gradient: 'from-blue-500/20 to-purple-500/20',
       image: aiCreatorCoachingNavigationCover,
       iconSymbol: '🎯',
