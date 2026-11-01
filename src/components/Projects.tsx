@@ -84,7 +84,7 @@ const Projects = () => {
       descriptionKey: 'projects.4.description',
       tags: ['Prompt Engineering', 'Knowledge Base', 'Productivity'],
       github: 'https://github.com/Timelovers/promptvault',
-      demo: '',
+      demo: '/promptvault/',
       gradient: 'from-pink-500/20 to-purple-500/20',
       image: promptvaultCover,
       iconSymbol: '💾',
