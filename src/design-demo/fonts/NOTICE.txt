@@ -1,0 +1,18 @@
+Subsets bundled for the design demo only.
+
+Noto Sans SC and Noto Serif SC
+Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
+Copyright 2012 Google Inc., with Reserved Font Name 'Noto'.
+Licensed under the SIL Open Font License, Version 1.1.
+
+Fraunces
+Copyright 2018 The Fraunces Project Authors (https://github.com/undercasetype/Fraunces)
+Licensed under the SIL Open Font License, Version 1.1.
+Reserved Font Name "Fraunces".
+
+IBM Plex Mono
+Copyright 2017 IBM Corp.
+Licensed under the SIL Open Font License, Version 1.1.
+
+CSS family names in this demo are "DD Sans", "DD Serif", "DD Display", and "DD Mono".
+These files are subset for the preview and are not a separate font product.

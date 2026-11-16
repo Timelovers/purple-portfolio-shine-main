@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 
 const CyberpunkBookmarksPage = lazy(() => import("./pages/CyberpunkBookmarksPage"));
 const SkillPlazaPage = lazy(() => import("./pages/SkillPlazaPage"));
+const DesignDemoPage = lazy(() => import("./pages/DesignDemoPage"));
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,14 @@ const App = () => (
               element={
                 <Suspense fallback={<div className="min-h-screen bg-slate-50" aria-hidden="true" />}>
                   <SkillPlazaPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/design-demo/*"
+              element={
+                <Suspense fallback={<div className="min-h-screen" style={{ background: "#f3eee6" }} />}>
+                  <DesignDemoPage />
                 </Suspense>
               }
             />
