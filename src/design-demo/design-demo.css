@@ -1,0 +1,1146 @@
+@font-face {
+  font-family: "DD Serif";
+  src: url("./fonts/NotoSerifSC-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DD Serif";
+  src: url("./fonts/NotoSerifSC-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DD Sans";
+  src: url("./fonts/NotoSansSC-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DD Sans";
+  src: url("./fonts/NotoSansSC-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DD Sans";
+  src: url("./fonts/NotoSansSC-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DD Display";
+  src: url("./fonts/Fraunces-italic.woff2") format("woff2");
+  font-weight: 560;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DD Mono";
+  src: url("./fonts/IBMPlexMono-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DD Mono";
+  src: url("./fonts/IBMPlexMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+.design-demo {
+  --bg: #f3eee6;
+  --bg-raised: rgba(255, 250, 244, 0.92);
+  --ink: #241c16;
+  --muted: #6d5f55;
+  --line: rgba(55, 36, 20, 0.1);
+  --line-strong: rgba(55, 36, 20, 0.16);
+  --grid: rgba(70, 46, 28, 0.055);
+  --cyan: #0c7f8c;
+  --cyan-soft: rgba(12, 127, 140, 0.12);
+  --coral: #e15a48;
+  --coral-soft: rgba(225, 90, 72, 0.12);
+  --card: #fffaf4;
+  --shadow: 0 18px 40px rgba(72, 42, 22, 0.08);
+  --nav-h: 72px;
+  min-height: 100vh;
+  color: var(--ink);
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+  font-family: "DD Sans", "Noto Sans SC", "PingFang SC", "WenQuanYi Micro Hei", "Droid Sans Fallback", sans-serif;
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+}
+
+.design-demo[data-theme="dark"] {
+  --bg: #14110f;
+  --bg-raised: rgba(28, 24, 21, 0.92);
+  --ink: #f6efe6;
+  --muted: #cbbbae;
+  --line: rgba(246, 239, 230, 0.1);
+  --line-strong: rgba(246, 239, 230, 0.18);
+  --grid: rgba(246, 239, 230, 0.045);
+  --cyan: #7ed6e0;
+  --cyan-soft: rgba(126, 214, 224, 0.14);
+  --coral: #ff8d7c;
+  --coral-soft: rgba(255, 141, 124, 0.14);
+  --card: #221c18;
+  --shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+}
+
+body.design-demo-active {
+  background: #f3eee6;
+  color: #241c16;
+}
+
+body.design-demo-active.design-demo-dark {
+  background: #14110f;
+  color: #f6efe6;
+}
+
+.design-demo * {
+  box-sizing: border-box;
+}
+
+.design-demo a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.design-demo button,
+.design-demo input {
+  font: inherit;
+  color: inherit;
+}
+
+.design-demo ::selection {
+  background: rgba(225, 90, 72, 0.28);
+}
+
+.dd-skip {
+  position: absolute;
+  left: 12px;
+  top: -40px;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 8px 12px;
+  z-index: 40;
+}
+
+.dd-skip:focus {
+  top: 12px;
+}
+
+.dd-margin {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 1px;
+  background: color-mix(in srgb, var(--coral) 55%, transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dd-nav {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: var(--nav-h);
+  padding: 10px 22px 10px 48px;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+
+.dd-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: max-content;
+}
+
+.dd-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: "DD Display", Fraunces, "Iowan Old Style", serif;
+  font-style: italic;
+  font-weight: 560;
+  font-size: 15px;
+}
+
+.dd-brand strong,
+.dd-brand small {
+  display: block;
+}
+
+.dd-brand strong {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.dd-brand small,
+.dd-kicker,
+.dd-mono {
+  font-family: "DD Mono", "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 400;
+}
+
+.dd-brand small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.dd-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-left: 8px;
+}
+
+.dd-nav-links a {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.dd-nav-links a[aria-current="page"],
+.dd-nav-links a:hover {
+  color: var(--ink);
+}
+
+.dd-nav-tools {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.dd-tool,
+.dd-button,
+.dd-button-ghost {
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  padding: 8px 14px;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+.dd-tool {
+  font-size: 13px;
+}
+
+.design-demo a.dd-button,
+.dd-button {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.design-demo a.dd-button-ghost,
+.dd-button-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--ink);
+}
+
+.design-demo a.dd-textlink,
+.dd-textlink {
+  color: var(--cyan);
+  font-weight: 500;
+}
+
+.dd-tool:hover,
+.design-demo a.dd-button-ghost:hover,
+.dd-button-ghost:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.design-demo a.dd-button:hover,
+.dd-button:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: #fffaf4;
+}
+
+.design-demo a:focus-visible,
+.design-demo button:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.dd-wrap {
+  width: min(1120px, calc(100% - 72px));
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.dd-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 36px;
+  align-items: center;
+  padding: 42px 0 28px;
+  min-height: calc(100vh - var(--nav-h));
+}
+
+.dd-kicker {
+  margin: 0 0 14px;
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.dd-hero h1 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.dd-hello {
+  display: block;
+  font-family: "DD Serif", "Noto Serif SC", "Songti SC", serif;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 1.15;
+  font-weight: 600;
+}
+
+.dd-name {
+  display: block;
+  margin-top: 4px;
+  font-family: "DD Display", Fraunces, "Iowan Old Style", Palatino, serif;
+  font-style: italic;
+  font-weight: 560;
+  font-size: clamp(4.4rem, 8vw, 7rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+}
+
+.dd-motto {
+  margin: 22px 0 0;
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: clamp(1.35rem, 2vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--coral);
+}
+
+.dd-lede {
+  max-width: 38rem;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.dd-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.dd-stage {
+  position: relative;
+  height: min(620px, calc(100vh - 140px));
+  min-height: 520px;
+  border-radius: 32px;
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--card) 78%, transparent);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.dd-stage-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.dd-stage-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.dd-cross {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.dd-cross::before,
+.dd-cross::after {
+  content: "";
+  position: absolute;
+  background: var(--cyan);
+  opacity: 0.7;
+}
+
+.dd-cross::before {
+  left: 6px;
+  top: 0;
+  width: 1px;
+  height: 14px;
+}
+
+.dd-cross::after {
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 1px;
+}
+
+.dd-cross-a { top: 16px; left: 16px; }
+.dd-cross-b { top: 16px; right: 16px; }
+.dd-cross-c { bottom: 16px; left: 16px; }
+.dd-cross-d { bottom: 16px; right: 16px; }
+
+.dd-coords {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  transform: translateX(-50%);
+  z-index: 2;
+  text-align: center;
+  pointer-events: none;
+  color: var(--muted);
+}
+
+.dd-coords strong {
+  display: block;
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.dd-coords span {
+  font-family: "DD Mono", ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.dd-node {
+  --px: 0px;
+  --py: 0px;
+  --rot: 0deg;
+  position: absolute;
+  width: 188px;
+  padding: 16px 16px 14px;
+  border-radius: 22px;
+  background: var(--card);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow);
+  transform: translate3d(var(--px), var(--py), 0) rotate(var(--rot));
+  transition: transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.2s linear;
+}
+
+.dd-node:hover,
+.dd-node:focus-visible {
+  transform: translate3d(var(--px), calc(var(--py) - 8px), 0) rotate(0deg);
+  border-color: var(--cyan);
+}
+
+.dd-node-glyph {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  margin-bottom: 22px;
+}
+
+.dd-node-glyph svg {
+  width: 28px;
+  height: 28px;
+}
+
+.dd-node[data-tone="coral"] .dd-node-glyph {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.dd-node[data-tone="cyan"] .dd-node-glyph {
+  background: var(--cyan-soft);
+  color: var(--cyan);
+}
+
+.dd-node[data-tone="ink"] .dd-node-glyph {
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+  color: var(--ink);
+}
+
+.dd-node small,
+.dd-node strong,
+.dd-node em {
+  display: block;
+}
+
+.dd-node small {
+  color: var(--muted);
+  font-family: "DD Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: 0.08em;
+}
+
+.dd-node strong {
+  margin-top: 4px;
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dd-node em {
+  margin-top: 6px;
+  color: var(--muted);
+  font-style: normal;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.dd-node b {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--cyan);
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.dd-node-a { left: 7%; top: 9%; --rot: -7deg; }
+.dd-node-b { right: 6%; top: 18%; --rot: 6deg; width: 200px; }
+.dd-node-c { left: 12%; bottom: 9%; --rot: 4deg; width: 176px; }
+.dd-node-d { right: 10%; bottom: 8%; --rot: -5deg; width: 180px; }
+
+.dd-section {
+  padding: 72px 0;
+  scroll-margin-top: 88px;
+}
+
+.dd-section-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.dd-section h2,
+.dd-case h1,
+.dd-about-copy h2 {
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.dd-section h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.dd-section-head p {
+  max-width: 26rem;
+  margin: 0;
+  color: var(--muted);
+}
+
+.dd-feature-grid,
+.dd-split,
+.dd-about,
+.dd-writing,
+.dd-skill-grid,
+.dd-contact-grid,
+.dd-other-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.dd-feature-grid,
+.dd-split,
+.dd-about,
+.dd-other-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.dd-card,
+.dd-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.dd-feature {
+  padding: 28px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s linear, transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.dd-feature:hover {
+  border-color: var(--cyan);
+  transform: translateY(-4px);
+}
+
+.dd-index {
+  font-family: "DD Mono", ui-monospace, monospace;
+  color: var(--coral);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+}
+
+.dd-feature h3,
+.dd-panel h3,
+.dd-flow-panel h3 {
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: 2rem;
+  margin: 10px 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dd-feature p,
+.dd-panel p,
+.dd-flow-panel p,
+.dd-other p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.dd-feature .dd-actions,
+.dd-linkrow {
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.dd-chips,
+.dd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dd-chips span,
+.dd-tags span,
+.dd-trait {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--bg) 65%, var(--card));
+}
+
+.dd-other {
+  padding: 22px;
+}
+
+.dd-other h3 {
+  margin: 8px 0;
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: 1.4rem;
+}
+
+.dd-textlinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  margin-top: 14px;
+}
+
+.dd-about {
+  align-items: stretch;
+}
+
+.dd-monogram {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 420px;
+  background:
+    radial-gradient(circle at 20% 20%, var(--cyan-soft), transparent 42%),
+    radial-gradient(circle at 80% 80%, var(--coral-soft), transparent 40%),
+    var(--card);
+}
+
+.dd-monogram-mark {
+  font-family: "DD Display", Fraunces, serif;
+  font-style: italic;
+  font-weight: 560;
+  font-size: clamp(5rem, 8vw, 7.5rem);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+}
+
+.dd-monogram p {
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+
+.dd-about-copy {
+  padding: 8px 8px 8px 12px;
+}
+
+.dd-about-copy h2 {
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
+  margin-bottom: 8px;
+}
+
+.dd-about-copy .dd-pull {
+  margin: 8px 0 18px;
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: 1.35rem;
+  color: var(--coral);
+}
+
+.dd-about-copy p {
+  margin: 0 0 14px;
+}
+
+.dd-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.dd-note {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.dd-skill-grid {
+  grid-template-columns: 1fr 1fr;
+  margin-top: 28px;
+}
+
+.dd-skill {
+  padding: 22px 24px;
+}
+
+.dd-skill h3 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+}
+
+.dd-skill ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dd-skill li {
+  position: relative;
+  padding-left: 14px;
+  color: var(--muted);
+}
+
+.dd-skill li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+}
+
+.dd-contact-grid {
+  grid-template-columns: 1.4fr 0.8fr 0.8fr;
+  margin-top: 18px;
+}
+
+.dd-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 148px;
+  padding: 20px 22px;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
+.dd-contact:hover {
+  border-color: var(--coral);
+}
+
+.dd-contact span {
+  color: var(--muted);
+  font-family: "DD Mono", ui-monospace, monospace;
+  font-size: 12px;
+}
+
+.dd-contact strong {
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  word-break: break-word;
+}
+
+.dd-opps {
+  padding: 22px;
+}
+
+.dd-opps ul {
+  margin: 12px 0 0;
+  padding-left: 18px;
+}
+
+.dd-writing {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.dd-post {
+  padding: 22px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dd-post time {
+  font-family: "DD Mono", ui-monospace, monospace;
+  color: var(--cyan);
+  font-size: 12px;
+}
+
+.dd-post h3 {
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: 1.35rem;
+  line-height: 1.3;
+  margin: 10px 0;
+}
+
+.dd-post p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.dd-post .dd-textlink {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.dd-case {
+  padding: 36px 0 80px;
+}
+
+.dd-case-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.dd-switch {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dd-switch a {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.dd-switch a[aria-current="page"] {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
+
+.dd-case h1 {
+  font-size: clamp(3rem, 7vw, 5.6rem);
+  max-width: 14ch;
+}
+
+.dd-aka {
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+
+.dd-thesis {
+  max-width: 40rem;
+  margin: 18px 0 0;
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.45;
+}
+
+.dd-meta {
+  display: grid;
+  grid-template-columns: 1.4fr 0.7fr 1.1fr 0.9fr;
+  gap: 1px;
+  margin-top: 28px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.dd-meta div {
+  background: var(--card);
+  padding: 16px 18px;
+}
+
+.dd-meta span {
+  display: block;
+  color: var(--muted);
+  font-family: "DD Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.dd-linkrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.dd-case-grid {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 28px;
+  margin-top: 36px;
+  align-items: start;
+}
+
+.dd-rail {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dd-rail a {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.dd-rail a:hover {
+  color: var(--coral);
+}
+
+.dd-block {
+  scroll-margin-top: 96px;
+}
+
+.dd-block + .dd-block {
+  margin-top: 28px;
+}
+
+.dd-block h2 {
+  font-family: "DD Serif", "Noto Serif SC", serif;
+  font-size: 1.8rem;
+  margin: 0 0 12px;
+}
+
+.dd-block p,
+.dd-block li {
+  color: var(--muted);
+}
+
+.dd-block ol,
+.dd-block ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.dd-block li + li,
+.dd-block p + p {
+  margin-top: 8px;
+}
+
+.dd-flow {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.dd-flow-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dd-flow-nav button {
+  text-align: left;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: transparent;
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.dd-flow-nav button[aria-selected="true"] {
+  background: var(--card);
+  border-color: var(--cyan);
+}
+
+.dd-flow-nav button span {
+  display: block;
+  font-family: "DD Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--coral);
+}
+
+.dd-flow-panel {
+  padding: 22px;
+  min-height: 180px;
+}
+
+.dd-draft {
+  padding: 22px 24px;
+  border-left: 3px solid var(--coral);
+}
+
+.dd-sources {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.dd-footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0 48px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dd-footer strong {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+@media (max-width: 980px) {
+  .dd-margin { display: none; }
+  .dd-nav { padding-left: 16px; align-items: flex-start; flex-wrap: wrap; }
+  .dd-nav-links { order: 3; width: 100%; margin-left: 0; }
+  .dd-wrap { width: min(1120px, calc(100% - 32px)); }
+  .dd-hero,
+  .dd-feature-grid,
+  .dd-split,
+  .dd-about,
+  .dd-other-grid,
+  .dd-writing,
+  .dd-skill-grid,
+  .dd-case-grid,
+  .dd-flow,
+  .dd-meta {
+    grid-template-columns: 1fr;
+  }
+  .dd-contact-grid { grid-template-columns: 1fr 1fr; }
+  .dd-hero { min-height: 0; padding-top: 28px; }
+  .dd-stage {
+    height: auto;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 58px 12px 12px;
+    overflow: hidden;
+  }
+  .dd-coords { top: 16px; }
+  .dd-node,
+  .dd-node-a,
+  .dd-node-b,
+  .dd-node-c,
+  .dd-node-d {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: auto;
+    --rot: 0deg;
+    transform: none;
+  }
+  .dd-node:hover,
+  .dd-node:focus-visible { transform: none; }
+  .dd-section-head { flex-direction: column; align-items: start; }
+  .dd-rail { position: static; flex-direction: row; flex-wrap: wrap; }
+}
+
+@media (max-width: 640px) {
+  .dd-name { font-size: 3.6rem; }
+  .dd-stage { grid-template-columns: 1fr 1fr; }
+  .dd-contact-grid,
+  .dd-writing { grid-template-columns: 1fr; }
+  .dd-nav { align-items: center; }
+  .dd-nav-tools { width: auto; }
+  .dd-case h1 { font-size: 2.7rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .design-demo:not(.allow-motion) *,
+  .design-demo:not(.allow-motion) *::before,
+  .design-demo:not(.allow-motion) *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.design-demo.is-still *,
+.design-demo.is-still *::before,
+.design-demo.is-still *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
